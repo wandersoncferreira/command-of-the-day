@@ -14,6 +14,10 @@ your 'load-path.
 (command-of-the-day +1)
 ```
 
+You can get your current report using `M-x
+command-of-the-day-report`. For now, the report is just a json pretty
+printed representation.
+
 # Customizations
 
 You should setup the bindings you desire to follow:
@@ -33,6 +37,9 @@ You can also change how many hits do you need to gradually move into the mastery
 ```elisp
 (setq command-of-the-day-apprentice-level 3
       command-of-the-day-journeyman-level 10)
+
+;;; how long the message will appear in the mode-line when you hit the key.
+(setq command-of-the-day-user-feedback-time 3)
 ```
 
 # License

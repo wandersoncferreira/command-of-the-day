@@ -87,18 +87,6 @@ be given to explicit day named.")
     (switch-to-buffer-other-window buf-name)
     (special-mode)))
 
-(defun bk/clj-random-docstring ()
-  "Random doc-string into new buffer."
-  (interactive)
-  (let ((docstring (shell-command-to-string "docstring.clj"))
-	(buffer-name "*Clojure Random Docs*"))
-    (when (get-buffer buffer-name)
-      (kill-buffer buffer-name))
-    (get-buffer-create buffer-name)
-    (with-current-buffer buffer-name (insert docstring))
-    (switch-to-buffer-other-window buffer-name)
-    (special-mode)))
-
 ;;;###autoload
 (define-minor-mode command-of-the-day-mode
   "Keep track of your commands today."
