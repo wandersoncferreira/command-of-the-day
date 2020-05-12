@@ -60,7 +60,9 @@ the coal, saying “thank you, I needed that.”
 
 The student was enlightened.
 
-(stolen from Read-Eval-print-λove from Michael Fogus, please read it.)
+
+
+(Read-Eval-print-λove from Michael Fogus, please read it.)
 
 # License
 Copyright (C) 2020-2020 Wanderson Ferreira
