@@ -59,26 +59,28 @@ be given to explicit day named.")
 
 (defun command-of-the-day-where-is? (command)
   "Find which keybinding is associated with a command."
-  (cadr (mapcar 'key-description
-		(where-is-internal command))))
+  (let ((sy (mapcar 'key-description (where-is-internal command))))
+    (if (equalp 1 (length sy))
+	(car sy)
+      (cadr sy))))
 
 (defun command-of-the-day-tracked-command? (command-binding)
   (let* ((todays-name (intern (concat ":" (downcase (format-time-string "%A" (current-time))))))
+	 (base-command-list (plist-get command-of-the-day-practice-schedule :base))
 	 (command-list (plist-get command-of-the-day-practice-schedule todays-name))
 	 (command-list (if command-list command-list (plist-get command-of-the-day-practice-schedule :any))))
-    (member command-binding command-list)))
-
-(defun command-of-the-day-user-feedback (text)
-  "Display TEXT in mode line for TIME seconds."
-  (let ((old mode-line-format)
-    (buf (current-buffer)))
-    (setq mode-line-format (append mode-line-format (list text)))
-    (run-at-time command-of-the-day-user-feedback-time nil
-            (lambda (v b)
-              (with-current-buffer b
-                (setq mode-line-format v)
-                (force-mode-line-update)))
-            old buf)))
+    (member command-binding (append command-list base-command-list))))
+ 
+(defun command-of-the-day-user-feedback (text &optional buffer delay)
+  "Display TEXT in BUFFER's mode line.
+The text is shown for DELAY seconds (default 2), or until a user event.
+So call this last in a sequence of user-visible actions."
+  (message nil) ; Remove any current msg
+  (with-current-buffer (or buffer  (current-buffer))
+    (make-local-variable 'mode-line-format) ; Needed for Emacs 21+.
+    (let ((mode-line-format  (append mode-line-format (list text))))
+      (force-mode-line-update) (sit-for (or delay  2)))
+    (force-mode-line-update)))
 
 (defun command-of-the-day-user-message (command-binding counter)
   (command-of-the-day-user-feedback
@@ -91,7 +93,7 @@ be given to explicit day named.")
     
     (t (format "Master: %s: %s hits" command-binding counter)))))
 
-(defun command-of-the-day-post-command-hook ()
+(defun command-of-the-day-pre-command-hook ()
   (let* ((command real-last-command) count
 	 (command-binding (command-of-the-day-where-is? command)))
     (when (and command (symbolp command) (command-of-the-day-tracked-command? command-binding))
@@ -122,8 +124,8 @@ be given to explicit day named.")
   :keymap nil
   :group 'command-of-the-day
   (if command-of-the-day-mode
-      (add-hook 'post-command-hook 'command-of-the-day-post-command-hook)
-    (remove-hook 'post-command-hook 'command-of-the-day-post-command-hook)))
+      (add-hook 'pre-command-hook 'command-of-the-day-pre-command-hook)
+    (remove-hook 'pre-command-hook 'command-of-the-day-pre-command-hook)))
 
 (provide 'command-of-the-day)
 ;;; command-of-the-day.el ends here
