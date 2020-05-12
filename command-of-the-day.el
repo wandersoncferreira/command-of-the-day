@@ -74,6 +74,32 @@ be given to explicit day named.")
       (puthash command-binding count command-of-the-day-table))))
 
 ;;;###autoload
+(defun command-of-the-day-report ()
+  "Report your current hits."
+  (interactive)
+  (let ((buf-name "*CommandOfTheDay"))
+    (when (get-buffer buf-name)
+      (kill-buffer buf-name))
+    (get-buffer-create buf-name)
+    (with-current-buffer buf-name
+      (insert (json-encode command-of-the-day-table))
+      (json-pretty-print-buffer))
+    (switch-to-buffer-other-window buf-name)
+    (special-mode)))
+
+(defun bk/clj-random-docstring ()
+  "Random doc-string into new buffer."
+  (interactive)
+  (let ((docstring (shell-command-to-string "docstring.clj"))
+	(buffer-name "*Clojure Random Docs*"))
+    (when (get-buffer buffer-name)
+      (kill-buffer buffer-name))
+    (get-buffer-create buffer-name)
+    (with-current-buffer buffer-name (insert docstring))
+    (switch-to-buffer-other-window buffer-name)
+    (special-mode)))
+
+;;;###autoload
 (define-minor-mode command-of-the-day-mode
   "Keep track of your commands today."
   :global t
