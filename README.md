@@ -42,6 +42,26 @@ You can also change how many hits do you need to gradually move into the mastery
 (setq command-of-the-day-user-feedback-time 3)
 ```
 
+# Felicitous Use
+
+One day the master macrologist Pi Mu and his macrolyte were having a
+meal of saba roasted on a shichirin when Pi Mu suddenly reached in
+with his chopsticks and extracted a red hot coal. He presented to the
+macrolyte stating “for you.” The macrolyte not knowing what to do but
+also not wishing to burn himself pulled his sleeves down over his
+hands and grabbed for the coal. Of course, the intense heat still hurt
+and the student ran to the kitchen and drenched the coal under running
+water. The macrolyte was dismayed to find his sleeve stained and
+burned from the coal and was quite angry as a result. In his anger he
+went back to the dining room and reached into the fire with his own
+chopsticks and extracted a coal of his own and presented the coal to
+Pi Mu. Pi Mu immediately pull from his jacket a cigar and lit it on
+the coal, saying “thank you, I needed that.”
+
+The student was enlightened.
+
+(stolen from Read-Eval-print-λove from Michael Fogus, please read it.)
+
 # License
 Copyright (C) 2020-2020 Wanderson Ferreira
 
