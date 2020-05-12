@@ -14,6 +14,11 @@
   :group 'command-of-the-day
   :type 'integer)
 
+(defcustom command-of-the-day-user-feedback-time 3
+  "Amount of seconds that we will keep the feedback message in the modeline."
+  :group 'command-of-the-day
+  :type 'integer)
+
 (defvar command-of-the-day-practice-schedule (list)
   "Hold the training schedule to practice your key bindings.
 This is a plist with the name of the day and the bindings to be followed.
@@ -31,20 +36,33 @@ be given to explicit day named.")
 		(where-is-internal command))))
 
 (defun command-of-the-day-tracked-command? (command-binding)
-  (let* ((todays-name (intern (downcase (format-time-string "%A" (current-time)))))
+  (let* ((todays-name (intern (concat ":" (downcase (format-time-string "%A" (current-time))))))
 	 (command-list (plist-get command-of-the-day-practice-schedule todays-name))
 	 (command-list (if command-list command-list (plist-get command-of-the-day-practice-schedule :any))))
     (member command-binding command-list)))
 
+(defun command-of-the-day-user-feedback (text)
+  "Display TEXT in mode line for TIME seconds."
+  (let ((old mode-line-format)
+    (buf (current-buffer)))
+    (setq mode-line-format (append mode-line-format (list text)))
+    (run-at-time command-of-the-day-user-feedback-time nil
+            (lambda (v b)
+              (with-current-buffer b
+                (setq mode-line-format v)
+                (force-mode-line-update)))
+            old buf)))
+
 (defun command-of-the-day-user-message (command-binding counter)
-  (cond
-   ((< counter command-of-the-day-apprentice-level)
-    (message "Apprentice: You hit %s %s times today" command-binding counter))
-   
-   ((< counter command-of-the-day-journeyman-level)
-    (message "Journeyman: You hit %s %s times today" command-binding counter))
-   
-   ((t (message "Master: You hit %s %s times today" command-binding counter)))))
+  (command-of-the-day-user-feedback
+   (cond
+    ((< counter command-of-the-day-apprentice-level)
+     (format "Apprentice: %s: %s hits" command-binding counter))
+    
+    ((< counter command-of-the-day-journeyman-level)
+     (format "Journeyman: %s: %s hits" command-binding counter))
+    
+    (t (format "Master: %s: %s hits" command-binding counter)))))
 
 (defun command-of-the-day-post-command-hook ()
   (let* ((command real-last-command) count
@@ -67,4 +85,3 @@ be given to explicit day named.")
     (remove-hook 'post-command-hook 'command-of-the-day-post-command-hook)))
 
 (provide 'command-of-the-day)
-
