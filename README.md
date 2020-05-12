@@ -7,12 +7,17 @@ you like.
 # Installation
 
 This package is not in MELPA yet. You need to grab this and place in
-your 'load-path.
+your `load-path`.
 
 ```elisp
+(add-to-list 'load-path "~/emacs.d/site-packages/command-of-the-day")
+
 (require 'command-of-the-day)
 (command-of-the-day +1)
 ```
+
+I am using a folder called `site-packages` to host these kind of
+repositories.
 
 You can get your current report using `M-x
 command-of-the-day-report`. For now, the report is just a json pretty
