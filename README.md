@@ -4,6 +4,14 @@ This is an Emacs package to help you sharp your Emacs skills. You
 should plan your week ahead or just practice whatever key bindings do
 you like.
 
+When you hit any of the desired keys, a mode-line message will
+temporary be available to you. The idea is that there are some
+commands that I'm not using too much but I should e.g. C-v, M-v, C-;
+(avy in my case), etc. Now I can explicitly measure my usage of those,
+therefore I set myself a goal to reach a mastery level for each of
+them.
+
+
 # Installation
 
 This package is not in MELPA yet. You need to grab this and place in
