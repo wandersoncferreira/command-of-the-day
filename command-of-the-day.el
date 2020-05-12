@@ -1,3 +1,30 @@
+;;; command-of-the-day.el --- Simple tracker of key bindings pressing
+
+;; Author: Wanderson Ferreira <wanderson.ferreira@protonmail.com>
+;; URL: https://github.com/wandersoncferreira/command-of-the-day
+;; Keywords: keys, bindings
+;; Version: 1.0
+;; Package-Requires: ((emacs "24.3"))
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 2, or (at your option)
+;; any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; Sharp your Emacs-fu
+
+;;; Code:
+
 (defgroup command-of-the-day nil
   "Customization group for Command of the day."
   :package-version '(command-of-the-day . "1.0")
@@ -99,3 +126,4 @@ be given to explicit day named.")
     (remove-hook 'post-command-hook 'command-of-the-day-post-command-hook)))
 
 (provide 'command-of-the-day)
+;;; command-of-the-day.el ends here
